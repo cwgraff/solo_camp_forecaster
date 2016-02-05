@@ -1,0 +1,27 @@
+<p>Selection section has arrived safely!</p>
+
+{{sample}}
+
+<h3>Please select a region:</h3>
+
+<select ng-model="region" ng-change="getList()">
+    <option value="All">All</option>
+    <option value="South">South</option>
+    <option value="Central">Central</option>
+    <option value="Metro">Metro</option>
+    <option value="Northwest">Northwest</option>
+    <option value="Northeast">Northeast</option>
+</select>
+<br><br>
+<form>
+<div ng-repeat="park in parkList">
+    <input type="checkbox" ng-click="selectLoc(park.id)">{{park.name}}<br>
+</div>
+</form>
+
+<div class="right">
+    <h3>Selected Park List:</h3>
+    <ul>
+        <li ng-repeat="selected in selectedList">{{selected[0].name}}</li>
+    </ul>
+</div>

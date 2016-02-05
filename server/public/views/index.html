@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="campApp">
+<head>
+    <meta charset="UTF-8">
+    <title>CampWhere</title>
+    <script src="vendor/angular/angular.min.js"></script>
+    <script src="vendor/angular-route/angular-route.min.js"></script>
+    <script src="assets/scripts/client.min.js"></script>
+    <link rel="stylesheet" href="assets/styles/styles.css">
+    <base href="/">
+</head>
+<body ng-controller="mainController">
+    <h1>Welcome!</h1>
+    <p>{{sample}}</p>
+
+    <!--Temporary buttons for testing-->
+    <a href="/selection"><button>SELECTION</button></a>
+    <a href="/result"><button>RESULT</button></a>
+
+    <div ng-view>
+        <!--page change partials will load here-->
+    </div>
+
+</body>
+</html>

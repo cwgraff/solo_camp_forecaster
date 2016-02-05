@@ -1,0 +1,9 @@
+body {
+    background-color: #F7EBE8;
+}
+
+.right {
+    position: absolute;
+    top: 200px;
+    right: 400px;
+}
