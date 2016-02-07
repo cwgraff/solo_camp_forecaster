@@ -14,14 +14,16 @@
 </select>
 <br><br>
 <form>
-<div ng-repeat="park in parkList">
+<div ng-repeat="park in parkList | orderBy : 'name'">
     <input type="checkbox" ng-click="selectLoc(park.id)">{{park.name}}<br>
 </div>
 </form>
 
-<div class="right">
+<div class="right" ng-hide="selectedList.length < 1" ng-class="hidden">
     <h3>Selected Park List:</h3>
-    <ul>
-        <li ng-repeat="selected in selectedList">{{selected.name}}</li>
-    </ul>
+    <form>
+        <div ng-repeat="selected in selectedList">
+            <input type="checkbox" ng-click="unSelectLoc(selected.id)">{{selected.name}}<br>
+        </div>
+    </form>
 </div>

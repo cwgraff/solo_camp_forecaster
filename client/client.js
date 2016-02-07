@@ -42,30 +42,24 @@ app.controller('SelectionController', ['$scope', '$http', function($scope, $http
             console.log(response.data);
             $scope.parkList = trimmedList(response.data);
 
-            //#### check returned array against selected array to avoid duplication ####
+            //##### check returned array against selected array to avoid duplication #####
             function trimmedList(responseArray){
                 for(var i = 0; i < responseArray.length; i++){
-                        console.log('for loop working - ', i);
                         var it=0;
                         while(it < $scope.selectedList.length){
-                            console.log('while loop - ', it);
-                            console.log($scope.selectedList);
-                            console.log(responseArray[i].id + "---" + $scope.selectedList[it].id);
                             if(responseArray[i].id == $scope.selectedList[it].id){
-                                console.log("MATCH!");
                             responseArray.splice(i,1);
                             it=0;} else {
                                 it++;
                             }
                         }
-
-                    }
+                }
                 return(responseArray);
             }
         });
     };
 
-    //########## Move selected from result array to selected array ###########
+    //########## Move chosen location from result array to selected array ###########
     $scope.selectLoc = function(eyeDee) {
         console.log(eyeDee);
         for(var i=0; i < $scope.parkList.length; i++){
@@ -73,6 +67,22 @@ app.controller('SelectionController', ['$scope', '$http', function($scope, $http
                 console.log($scope.parkList[i]);
                 $scope.selectedList.push($scope.parkList.splice(i, 1)[0]);
                 console.log($scope.parkList);
+            }
+        }
+    };
+
+    //########## Move from selected array back to region array ################
+    $scope.unSelectLoc = function(eyeDee) {
+        console.log(eyeDee);
+        for(var i=0; i < $scope.selectedList.length; i++){
+            if(eyeDee == $scope.selectedList[i].id){
+                if($scope.selectedList[i].region == $scope.parkList[0].region) {
+                    $scope.parkList.push($scope.selectedList.splice(i, 1)[0]);
+                } else {
+                    $scope.selectedList.splice(i, 1);
+                    //$scope.selectedList.push($scope.parkList.splice(i, 1)[0]);
+                    console.log($scope.selectedList);
+                }
             }
         }
     }
@@ -85,6 +95,17 @@ app.controller('SelectionController', ['$scope', '$http', function($scope, $http
 app.controller('ResultController', ['$scope', '$http', function($scope, $http){
     $scope.sample = 'Result Angular hooked up correctly';
 
+    acquireData();
+
+    function acquireData(){
+        $http.jsonp('https://api.forecast.io/forecast/760edd936d31e7c58af4820c05f8a327/46.1446779,-93.4880157/?exclude=currently,minutely,hourly,alerts,flags&callback=JSON_CALLBACK').then(function(response){
+            $scope.forecast = response.data.daily.data;
+            console.log($scope.forecast);
+        })
+    }
+
 }]);
+
+
 
 
