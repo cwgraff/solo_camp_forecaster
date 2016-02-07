@@ -2,4 +2,13 @@
 
 {{sample}}
 
-<p>{{forecast}}</p>
+<h2>Forecast for {{selectedList[0].name}}</h2>
+
+<div ng-repeat="forecast in forecastList">
+<p>Date: <b>{{forecast.time * 1000 | date}}</b></p>
+<p>Chance of rain: %{{forecast.precipProbability * 100}}</p>
+<p>Low: {{forecast.temperatureMin}} F</p>
+<p>High: {{forecast.temperatureMax}} F</p>
+<p>Daily Summary: {{forecast.summary}}</p>
+    <hr/>
+</div>

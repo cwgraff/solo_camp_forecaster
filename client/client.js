@@ -97,13 +97,13 @@ app.controller('ResultController', ['$scope', '$http', function($scope, $http){
 
     acquireData();
 
+    //###### Make call to API for forecast data #######
     function acquireData(){
-        $http.jsonp('https://api.forecast.io/forecast/760edd936d31e7c58af4820c05f8a327/46.1446779,-93.4880157/?exclude=currently,minutely,hourly,alerts,flags&callback=JSON_CALLBACK').then(function(response){
-            $scope.forecast = response.data.daily.data;
-            console.log($scope.forecast);
+        $http.jsonp('https://api.forecast.io/forecast/760edd936d31e7c58af4820c05f8a327/'+$scope.selectedList[0].lat+','+$scope.selectedList[0].long+'/?exclude=currently,minutely,hourly,alerts,flags&callback=JSON_CALLBACK').then(function(response){
+            $scope.forecastList = response.data.daily.data;
+            console.log($scope.forecastList);
         })
     }
-
 }]);
 
 
