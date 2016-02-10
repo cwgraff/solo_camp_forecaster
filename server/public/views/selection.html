@@ -19,7 +19,35 @@
 </div>
 </form>
 
-<div class="right" ng-hide="selectedList.length < 1" ng-class="hidden">
+<div class="right_up">
+    <form>
+    <select ng-model="dateStart" ng-change="">
+        <option value="" disabled selected>Start Date</option>
+        <option value=1 ng-hide="dateEnd <= 1">{{dateToday + dateIt | date:'fullDate'}}</option>
+        <option value=2 ng-hide="dateEnd <= 2">{{dateToday + 2 * dateIt | date:'fullDate'}}</option>
+        <option value=3 ng-hide="dateEnd <= 3">{{dateToday + 3 * dateIt | date:'fullDate'}}</option>
+        <option value=4 ng-hide="dateEnd <= 4">{{dateToday + 4 * dateIt | date:'fullDate'}}</option>
+        <option value=5 ng-hide="dateEnd <= 5">{{dateToday + 5 * dateIt | date:'fullDate'}}</option>
+        <option value=6 ng-hide="dateEnd <= 6">{{dateToday + 6 * dateIt | date:'fullDate'}}</option>
+        <option value=7 ng-hide="dateEnd <= 7">{{dateToday + 7 * dateIt | date:'fullDate'}}</option>
+    </select>
+    </form>
+    to:
+    <form>
+        <select ng-model="dateEnd" ng-change="">
+            <option value="" disabled selected>End Date</option>
+            <option value=2 ng-hide="dateStart > 1 || !dateStart">{{dateToday + 2 * dateIt | date:'fullDate'}}</option>
+            <option value=3 ng-hide="dateStart > 2 || !dateStart">{{dateToday + 3 * dateIt | date:'fullDate'}}</option>
+            <option value=4 ng-hide="dateStart > 3 || !dateStart">{{dateToday + 4 * dateIt | date:'fullDate'}}</option>
+            <option value=5 ng-hide="dateStart > 4 || !dateStart">{{dateToday + 5 * dateIt | date:'fullDate'}}</option>
+            <option value=6 ng-hide="dateStart > 5 || !dateStart">{{dateToday + 6 * dateIt | date:'fullDate'}}</option>
+            <option value=7 ng-hide="dateStart > 6 || !dateStart">{{dateToday + 7 * dateIt | date:'fullDate'}}</option>
+        </select>
+    </form>
+    <a href="/result"><button ng-hide="selectedList.length < 1" ng-click="setDateRange()">RESULT</button></a>
+</div>
+
+<div class="right_down" ng-hide="selectedList.length < 1" ng-class="hidden">
     <h3>Selected Park List:</h3>
     <form>
         <div ng-repeat="selected in selectedList">

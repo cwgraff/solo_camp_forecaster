@@ -2,9 +2,17 @@ body {
     background-color: #F7EBE8;
 }
 
-.right {
+.right_up {
     position: absolute;
     top: 200px;
+    right: 400px;
+    background-color: #FFFFFF;
+    padding: 10px;
+}
+
+.right_down {
+    position: absolute;
+    top: 300px;
     right: 400px;
     background-color: #FFFFFF;
     padding: 10px;
