@@ -127,12 +127,15 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
     var acquireData = function(i, name){
         $http.jsonp('https://api.forecast.io/forecast/760edd936d31e7c58af4820c05f8a327/'+$scope.selectedList[i].lat+','+$scope.selectedList[i].long+'/?exclude=currently,minutely,hourly,alerts,flags&callback=JSON_CALLBACK').then(function(response){
             currentReturn = response.data.daily.data;
-            //Build an object
+            //########### Build a formatted object for each API return and push to an array ############
             var formattedReturn = {
                 parkName: name,
                 averageTemp: averageTempCalc(),
                 averagePrecip: averagePrecipCalc(),
-                summary: addSummaries()
+                summaries: addSummaries(),
+                dates: addDates(),
+                dailyPrecip: dailyPrecip(),
+                dailyTemp: dailyTemp()
             };
             returnsArray.push(formattedReturn);
             console.log(returnsArray);
@@ -144,30 +147,31 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
         acquireData(i, $scope.selectedList[i].name);
     }
 
-    //Build an object
-    //Select appropriate range
-    //Add park name
-    //Do the maths - average high temp
+    //##################################################################################
+    //        Functions for constructing object with formatted return results
+    //##################################################################################
+
+    //############ Calculate average temperature for selected date range ###############
     function averageTempCalc(){
         var tempTotal = 0;
         var tempArray  = currentReturn.slice($scope.startDate, $scope.endDate + 1);
         for(var i = 0; i < tempArray.length; i++){
             tempTotal += tempArray[i].temperatureMax;
-            console.log('TEMPERATURE', tempArray[i].temperatureMax);
         }
         return (tempTotal / tempArray.length);
     }
-    //Do the maths - average precip %
+
+    //############ Calculate average precipitation for selected date range ###############
     function averagePrecipCalc(){
         var tempTotal = 0;
         var tempArray  = currentReturn.slice($scope.startDate, $scope.endDate + 1);
         for(var i = 0; i < tempArray.length; i++){
             tempTotal += tempArray[i].precipProbability;
-            console.log('PRECIP', tempArray[i].precipProbability);
         }
         return (tempTotal / tempArray.length);
     }
-    //Summary blurb
+
+    //########## Push daily forecast summaries into an array ###############
     function addSummaries() {
         var blurbArray = [];
         var tempArray = currentReturn.slice($scope.startDate, $scope.endDate + 1);
@@ -175,7 +179,36 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
             blurbArray.push(tempArray[i].summary);
         }
         return blurbArray;
-        //Push it (real good)
+    }
+
+    //########### Push UNIX dates for selected range into an array #############
+    function addDates() {
+        var dateArray = [];
+        var tempArray = currentReturn.slice($scope.startDate, $scope.endDate + 1);
+        for (var i = 0; i < tempArray.length; i++) {
+            dateArray.push(tempArray[i].time);
+        }
+        return dateArray;
+    }
+
+    //########### Push daily precipition percentages for selected range into an array #############
+    function dailyPrecip() {
+        var precipArray = [];
+        var tempArray = currentReturn.slice($scope.startDate, $scope.endDate + 1);
+        for (var i = 0; i < tempArray.length; i++) {
+            precipArray.push(tempArray[i].precipProbability);
+        }
+        return precipArray;
+    }
+
+    //########### Push daily high temperature for selected range into an array #############
+    function dailyTemp() {
+        var dailyArray = [];
+        var tempArray = currentReturn.slice($scope.startDate, $scope.endDate + 1);
+        for (var i = 0; i < tempArray.length; i++) {
+            dailyArray.push(tempArray[i].temperatureMax);
+        }
+        return dailyArray;
     }
 
 
