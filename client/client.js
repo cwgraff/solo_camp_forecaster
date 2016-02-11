@@ -55,6 +55,7 @@ app.controller('SelectionController', ['$scope', '$http', 'DataService', functio
         selectedRegion = $scope.region;
         $http.get('/getData/' + selectedRegion).then(function (response) {
             console.log(response.data);
+            $scope.parkList = [];
             $scope.parkList = trimmedList(response.data);
 
             //##### check returned array against selected array to avoid duplication #####
@@ -122,6 +123,10 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
 
     var returnsArray = [];
     var currentReturn;
+    $scope.dailyArray = [];
+    $scope.finalArray = [];
+
+
 
     //###### Make call to API for forecast data #######
     var acquireData = function(i, name){
@@ -138,7 +143,9 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
                 dailyTemp: dailyTemp()
             };
             returnsArray.push(formattedReturn);
-            console.log(returnsArray);
+            if(returnsArray.length == $scope.selectedList.length){
+                sortArray();
+            }
         })
     };
 
@@ -146,6 +153,25 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
     for (var i = 0; i < $scope.selectedList.length; i++) {
         acquireData(i, $scope.selectedList[i].name);
     }
+
+    function sortArray() {
+        returnsArray.sort(sortNumbers);
+        console.log(returnsArray);
+        $scope.finalArray = returnsArray;
+        buildDailyArray();
+    }
+
+    function sortNumbers(a, b) {
+            if (a.averageTemp < b.averageTemp ) {
+                return 1;
+            }
+            if (a.averageTemp > b.averageTemp ) {
+                return -1;
+            }
+            // a must be equal to b
+            return 0;
+        }
+
 
     //##################################################################################
     //        Functions for constructing object with formatted return results
@@ -211,6 +237,18 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
         return dailyArray;
     }
 
+    function buildDailyArray() {
+        for (var i = 0; i < $scope.finalArray[0].dates.length; i++) {
+            var oneDay = {
+                summaries: $scope.finalArray[0].summaries[i],
+                dates: $scope.finalArray[0].dates[i],
+                dailyPrecip: $scope.finalArray[0].dailyPrecip[i],
+                dailyTemp: $scope.finalArray[0].dailyTemp[i]
+            };
+
+            $scope.dailyArray.push(oneDay);
+        }
+    }
 
 }]);
 

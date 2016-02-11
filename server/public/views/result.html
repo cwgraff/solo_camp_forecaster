@@ -2,13 +2,13 @@
 
 {{sample}}
 
-<h2>Forecast for {{selectedList[0].name}}</h2>
+<h2>The highest average temperature will be at {{finalArray[0].parkName}}</h2>
 
-<div ng-repeat="forecast in forecastList.slice(startDate, endDate + 1)">
-    <p>Date: <b>{{forecast.time * 1000 | date:"fullDate"}}</b></p>
-    <p>Chance of precipitation: {{forecast.precipProbability * 100}}%</p>
-    <p>Low: {{forecast.temperatureMin}} F</p>
-    <p>High: {{forecast.temperatureMax}} F</p>
-    <p>Daily Summary: {{forecast.summary}}</p>
-    <hr/>
+<b>Daily breakdown:</b>
+<div>
+    <p>Average Temperature: {{finalArray[0].averageTemp}}</p>
+    <div ng-repeat="day in dailyArray">
+    <p><b>{{day.dates * 1000 | date: "fullDate"}}</b> High Temp: <b>{{day.dailyTemp}}F</b> Precipitation Chance: <b>{{day.dailyPrecip * 100}}%</b> {{day.summaries}}</p>
+    </div>
 </div>
+
