@@ -54,7 +54,7 @@ table {
 body {
     background-color: #BFC757;
     font-family: Tahoma, Verdana, Helvetica, sans-serif;
-    margin-top: 85px;
+    margin-top: 90px;
 }
 
 .right_up {
@@ -83,21 +83,40 @@ body {
 
 header {
     width: 100%;
-    height: 85px;
+    height: 70px;
     background-color: #0A0F05;
     border-bottom: solid 3px #F7EBE8;
-    color: #F7EBE8;
     position: fixed;
     top: 0;
     z-index: 2000;
+    padding: 15px 0px 0px 15px;
 }
 
 footer {
     width: 100%;
-    height: 40px;
+    height: 35px;
     background-color: #0A0F05;
     border-top: solid 3px #F7EBE8;
     position: fixed;
     bottom: 0;
     color: #F7EBE8;
+    z-index: 2000;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 30px;
+    color: #F7EBE8;
+}
+
+.little {
+    padding-top: 5px;
+    color: #F7EBE8;
+    font-size: 11px;
+    text-align: center;
+}
+
+b {
+    font-weight: bold;
+    font-size: 16px;
 }

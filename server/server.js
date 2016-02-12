@@ -14,7 +14,6 @@ var app = express();
 app.use(express.static('server/public'));
 
 app.use('/getData', database);
-app.use('/', index);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -33,6 +32,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/', index);
 
 passport.serializeUser(function(user, done){
     console.log('serializeUser', user);
@@ -59,11 +60,12 @@ passport.use('local', new localStrategy({
     usernameField: 'username'
 }, function(req, username, password, done){
 
+    console.log('Inside function');
     pg.connect(connectionString, function(err, client){
         var user = {};
 
         var query = client.query('SELECT * FROM users WHERE username = $1', [username]);
-
+        console.log(query);
         query.on('row', function(row){
             user = row;
             console.log('User object', user);

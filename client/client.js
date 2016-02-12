@@ -5,7 +5,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     $routeProvider
         .when('/', {
             templateUrl:'views/login.html',
-            controller: 'MainController'
+            controller: 'LoginController'
         })
         .when('/selection', {
             templateUrl:'views/selection.html',
@@ -31,18 +31,56 @@ app.factory('DataService', function(){
 
 });
 
+app.factory('UserService', ['$http', '$location', function($http, $location){
+
+    var userData = {};
+
+    var makeLoginRequest = function(data){
+        $http.post('/', data).then(function(response){
+            console.log('Response from POST - ', response);
+            userData.server = response.data;
+            userData.username = response.data.username;
+            userData.isLoggedIn = true;
+            userData.logInTime = new Date();
+            if(response.data == 'success'){
+                $location.path('selection');
+            } else {
+                return false;
+            }
+        });
+    };
+
+    return {
+        userData: userData,
+        makeLoginRequest: makeLoginRequest
+    };
+
+
+}]);
+
 //################################################################################
 //                            Main Controller
 //################################################################################
 
 app.controller('mainController', ['$scope', '$http', 'DataService', function($scope, $http, DataService){
-    $scope.sample = 'Angular hooked up correctly';
 
     //######## Global scope variable holds selected array ##########
     $scope.selectedList = [];
 
     //######## Global date variable holds today's date ############
     $scope.dateToday = Date.now();
+
+}]);
+
+//################################################################################
+//                            Login Controller
+//################################################################################
+
+app.controller('LoginController', ['$scope', '$location', 'DataService', 'UserService',  function($scope, $location, DataService, UserService){
+
+    $scope.sendDataAndStuff = function(){
+        var loginSuccessful = UserService.makeLoginRequest($scope.data);
+    };
 
 }]);
 
