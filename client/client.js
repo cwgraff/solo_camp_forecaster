@@ -3,6 +3,10 @@ var app = angular.module('campApp', ['ngRoute']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $routeProvider
+        .when('/', {
+            templateUrl:'views/login.html',
+            controller: 'MainController'
+        })
         .when('/selection', {
             templateUrl:'views/selection.html',
             controller: 'SelectionController'

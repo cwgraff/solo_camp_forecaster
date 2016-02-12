@@ -3,12 +3,11 @@
 {{sample}}
 
 <h2>The highest average temperature will be at {{finalArray[0].parkName}}</h2>
-
-<b>Daily breakdown:</b>
+<p>Average Temperature: <b>{{finalArray[0].averageTemp.toFixed(2)}} &#8457</b></p>
 <div>
-    <p>Average Temperature: {{finalArray[0].averageTemp}}</p>
+    <b>Daily breakdown:</b>
     <div ng-repeat="day in dailyArray">
-    <p><b>{{day.dates * 1000 | date: "fullDate"}}</b> High Temp: <b>{{day.dailyTemp}}F</b> Precipitation Chance: <b>{{day.dailyPrecip * 100}}%</b> {{day.summaries}}</p>
+    <p><b>{{day.dates * 1000 | date: "fullDate"}}</b> High Temp: <b>{{day.dailyTemp.toFixed(0)}}  &#8457</b> Precipitation Chance: <b>{{(day.dailyPrecip * 100).toFixed(0)}}%</b><br/>{{day.summaries}}</p>
     </div>
 </div>
 

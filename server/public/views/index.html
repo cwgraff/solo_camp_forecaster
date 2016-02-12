@@ -9,16 +9,15 @@
     <link rel="stylesheet" href="assets/styles/styles.css">
     <base href="/">
 </head>
-<body ng-controller="mainController">
-    <h1>Welcome!</h1>
-    <p>{{sample}}</p>
-
-    <!--Temporary buttons for testing-->
-    <a href="/selection"><button>SELECTION</button></a>
-
-    <div ng-view>
-        <!--page change partials will load here-->
-    </div>
-
+<body ng-controller = "mainController">
+<header>
+    <h1>parkcast</h1>
+</header>
+<footer>
+    &#xA9;2016
+</footer>
+<div ng-view>
+    <!--Page partials will display here-->
+</div>
 </body>
 </html>
