@@ -1,14 +1,35 @@
-<p>Result selection has arrived safely!</p>
-
-{{sample}}
-
-<h2>The highest average temperature will be at {{finalArray[0].parkName}}</h2>
-<p>Average Temperature: <b>{{finalArray[0].averageTemp.toFixed(2)}} &#8457</b></p>
-<div>
-    <b>Daily breakdown:</b>
-    <div ng-repeat="day in dailyArray">
-    <p><b>{{day.dates * 1000 | date: "fullDate"}}</b> High Temp: <b>{{day.dailyTemp.toFixed(0)}}  &#8457</b> Precipitation Chance: <b>{{(day.dailyPrecip * 100).toFixed(0)}}%</b><br/>{{day.summaries}}</p>
+<div ng-show="dailyArray.length == 3">
+    <h2>The highest average temperature will be at: <span class="green">{{finalArray[0].parkName}}</span></h2>
+    <p>Average Temperature over {{dailyArray[0].length}} days: <b class="red">{{finalArray[0].averageTemp.toFixed(2)}} &#8457</b></p>
+    <p>Average of precipitation chance over {{dailyArray[0].length}} days: <b class="blue">{{(finalArray[0].averagePrecip * 100).toFixed(0)}}%</b></p>
+    <div><br/>
+        <p class="ul">Daily breakdown:</p>
+        <div ng-repeat="day in dailyArray[0]">
+        <p><b>{{day.dates * 1000 | date: "fullDate"}}</b> High Temp: <b class="red">{{day.dailyTemp.toFixed(0)}}  &#8457</b> Precipitation: <b class="blue">{{(day.dailyPrecip * 100).toFixed(0)}}%</b> || <span class="blurb">{{day.summaries}}</span></p><br/>
+        </div>
     </div>
-</div>
 
-<a href="/selection"><button>Change Search Parameters</button></a>
+    <hr/><br>
+    <h3>The second highest average temperature will be at: <span class="green">{{finalArray[1].parkName}}</span></h3>
+    <p>Average Temperature over {{dailyArray[1].length}} days: : <b class="red">{{finalArray[1].averageTemp.toFixed(2)}} &#8457</b></p>
+    <p>Average of precipitation chance over {{dailyArray[1].length}} days: <b class="blue">{{(finalArray[1].averagePrecip * 100).toFixed(0)}}%</b></p>
+    <div><br/>
+        <p class="ul">Daily breakdown:</p>
+        <div ng-repeat="day in dailyArray[1]">
+            <p><b>{{day.dates * 1000 | date: "fullDate"}}</b> High Temp: <b class="red">{{day.dailyTemp.toFixed(0)}}  &#8457</b> Precipitation: <b class="blue">{{(day.dailyPrecip * 100).toFixed(0)}}%</b> || <span class="blurb">{{day.summaries}}</span></p><br/>
+        </div>
+    </div>
+
+    <hr/><br>
+    <h3>The third highest average temperature will be at: <span class="green">{{finalArray[2].parkName}}</span></h3>
+    <p>Average Temperature over {{dailyArray[2].length}} days: : <b class="red">{{finalArray[2].averageTemp.toFixed(2)}} &#8457</b></p>
+    <p>Average of precipitation chance over {{dailyArray[2].length}} days: <b class="blue">{{(finalArray[2].averagePrecip * 100).toFixed(0)}}%</b></p>
+    <div><br/>
+        <p class="ul">Daily breakdown:</p>
+        <div ng-repeat="day in dailyArray[2]">
+            <p><b>{{day.dates * 1000 | date: "fullDate"}}</b> High Temp: <b class="red">{{day.dailyTemp.toFixed(0)}}  &#8457</b> Precipitation: <b class="blue">{{(day.dailyPrecip * 100).toFixed(0)}}%</b> || <span class="blurb">{{day.summaries}}</span></p><br/>
+        </div>
+    </div>
+
+    <a href="/selection"><button>Change Search Parameters</button></a>
+</div>

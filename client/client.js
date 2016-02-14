@@ -36,18 +36,19 @@ app.factory('UserService', ['$http', '$location', function($http, $location){
     var userData = {};
 
     var makeLoginRequest = function(data){
-        $http.post('/', data).then(function(response){
-            console.log('Response from POST - ', response);
-            userData.server = response.data;
-            userData.username = response.data.username;
-            userData.isLoggedIn = true;
-            userData.logInTime = new Date();
-            if(response.data == 'success'){
-                $location.path('selection');
-            } else {
-                return false;
-            }
-        });
+        //$http.post('/', data).then(function(response){
+        //    console.log('Response from POST - ', response);
+        //    userData.server = response.data;
+        //    userData.username = response.data.username;
+        //    userData.isLoggedIn = true;
+        //    userData.logInTime = new Date();
+        //    if(response.data == 'success'){
+        //        $location.path('selection');
+        //    } else {
+        //        return false;
+        //    }
+        //});
+        return $http.post('/', data);
     };
 
     return {
@@ -76,12 +77,18 @@ app.controller('mainController', ['$scope', '$http', 'DataService', function($sc
 //                            Login Controller
 //################################################################################
 
-app.controller('LoginController', ['$scope', '$location', 'DataService', 'UserService',  function($scope, $location, DataService, UserService){
+app.controller('LoginController', ['$http', '$scope', '$location', 'DataService', 'UserService',  function($http, $scope, $location, DataService, UserService){
 
-    $scope.sendDataAndStuff = function(){
-        var loginSuccessful = UserService.makeLoginRequest($scope.data);
+    $scope.sendDataAndStuff = function() {
+        //var loginSuccessful = UserService.makeLoginRequest($scope.data);
+
+        UserService.makeLoginRequest($scope.data).then(function (response) {
+            console.log('Response from POST - ', response);
+            if (response.data == 'success') {
+                $location.path('selection');
+            }
+        });
     };
-
 }]);
 
 //################################################################################
@@ -89,7 +96,6 @@ app.controller('LoginController', ['$scope', '$location', 'DataService', 'UserSe
 //################################################################################
 
 app.controller('SelectionController', ['$scope', '$http', 'DataService', function($scope, $http, DataService){
-    $scope.sample = 'Selection Angular hooked up correctly';
     $scope.dateIt = (1000 * 60 * 60 * 24);
 
     //########### AJAX call to DB by region #############
@@ -159,7 +165,7 @@ app.controller('SelectionController', ['$scope', '$http', 'DataService', functio
 //################################################################################
 
 app.controller('ResultController', ['$scope', '$http', 'DataService', function($scope, $http, DataService){
-    $scope.sample = 'Result Angular hooked up correctly';
+
     $scope.startDate = Number(DataService.startDate);
     $scope.endDate = Number(DataService.endDate);
 
@@ -280,16 +286,21 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
     }
 
     function buildDailyArray() {
-        for (var i = 0; i < $scope.finalArray[0].dates.length; i++) {
-            var oneDay = {
-                summaries: $scope.finalArray[0].summaries[i],
-                dates: $scope.finalArray[0].dates[i],
-                dailyPrecip: $scope.finalArray[0].dailyPrecip[i],
-                dailyTemp: $scope.finalArray[0].dailyTemp[i]
-            };
+        for (var it = 0; it < 3; it++) {
+            var onePark = [];
+            for (var i = 0; i < $scope.finalArray[it].dates.length; i++) {
+                var oneDay = {
+                    summaries: $scope.finalArray[it].summaries[i],
+                    dates: $scope.finalArray[it].dates[i],
+                    dailyPrecip: $scope.finalArray[it].dailyPrecip[i],
+                    dailyTemp: $scope.finalArray[it].dailyTemp[i]
+                };
 
-            $scope.dailyArray.push(oneDay);
+                onePark.push(oneDay);
+            }
+            $scope.dailyArray.push(onePark);
         }
+        console.log('Daily Array', $scope.dailyArray)
     }
 
 }]);

@@ -46,10 +46,14 @@ passport.deserializeUser(function(id, done){
         var user = {};
 
         var query = client.query('SELECT * FROM users WHERE id = $1', [id]);
-
+        var counter = 0;
         query.on('row', function(row){
             user = row;
-            console.log('User object', user);
+            counter++;
+            console.log('User object ', counter, user);
+            //done(null, user); //creates req.user
+        });
+        query.on('end', function(){
             done(null, user); //creates req.user
         });
     });
@@ -59,13 +63,10 @@ passport.use('local', new localStrategy({
     passReqToCallback: true,
     usernameField: 'username'
 }, function(req, username, password, done){
-
-    console.log('Inside function');
     pg.connect(connectionString, function(err, client){
         var user = {};
 
         var query = client.query('SELECT * FROM users WHERE username = $1', [username]);
-        console.log(query);
         query.on('row', function(row){
             user = row;
             console.log('User object', user);

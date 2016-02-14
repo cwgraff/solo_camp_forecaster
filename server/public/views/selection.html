@@ -1,57 +1,70 @@
-<p>Selection section has arrived safely!</p>
+<div class = "left">
+    <p>Click a park below to move it into the selected list:</p>
+    <br>
+    <h3>Select by region:</h3>
 
-{{sample}}
-
-<h3>Please select a region:</h3>
-
-<select ng-model="region" ng-change="getList()">
-    <option value="All">All</option>
-    <option value="South">South</option>
-    <option value="Central">Central</option>
-    <option value="Metro">Metro</option>
-    <option value="Northwest">Northwest</option>
-    <option value="Northeast">Northeast</option>
-</select>
-<br><br>
-<form>
-<div ng-repeat="park in parkList | orderBy : 'name'">
-    <input type="checkbox" ng-click="selectLoc(park.id)">{{park.name}}<br>
-</div>
-</form>
-
-<div class="right_up">
     <form>
-    <select ng-model="dateStart" ng-change="">
-        <option value="" disabled selected>Start Date</option>
-        <option value=1 ng-hide="dateEnd <= 1">{{dateToday + dateIt | date:'fullDate'}}</option>
-        <option value=2 ng-hide="dateEnd <= 2">{{dateToday + 2 * dateIt | date:'fullDate'}}</option>
-        <option value=3 ng-hide="dateEnd <= 3">{{dateToday + 3 * dateIt | date:'fullDate'}}</option>
-        <option value=4 ng-hide="dateEnd <= 4">{{dateToday + 4 * dateIt | date:'fullDate'}}</option>
-        <option value=5 ng-hide="dateEnd <= 5">{{dateToday + 5 * dateIt | date:'fullDate'}}</option>
-        <option value=6 ng-hide="dateEnd <= 6">{{dateToday + 6 * dateIt | date:'fullDate'}}</option>
-        <option value=7 ng-hide="dateEnd <= 7">{{dateToday + 7 * dateIt | date:'fullDate'}}</option>
-    </select>
-    </form>
-    to:
-    <form>
-        <select ng-model="dateEnd" ng-change="">
-            <option value="" selected>End Date</option>
-            <option value=2 ng-hide="dateStart > 1 || !dateStart">{{dateToday + 2 * dateIt | date:'fullDate'}}</option>
-            <option value=3 ng-hide="dateStart > 2 || !dateStart">{{dateToday + 3 * dateIt | date:'fullDate'}}</option>
-            <option value=4 ng-hide="dateStart > 3 || !dateStart">{{dateToday + 4 * dateIt | date:'fullDate'}}</option>
-            <option value=5 ng-hide="dateStart > 4 || !dateStart">{{dateToday + 5 * dateIt | date:'fullDate'}}</option>
-            <option value=6 ng-hide="dateStart > 5 || !dateStart">{{dateToday + 6 * dateIt | date:'fullDate'}}</option>
-            <option value=7 ng-hide="dateStart > 6 || !dateStart">{{dateToday + 7 * dateIt | date:'fullDate'}}</option>
+        <select ng-model="region" ng-change="getList()">
+            <option value="All">All</option>
+            <option value="South">South</option>
+            <option value="Central">Central</option>
+            <option value="Metro">Metro</option>
+            <option value="Northwest">Northwest</option>
+            <option value="Northeast">Northeast</option>
         </select>
     </form>
-    <a href="/result"><button ng-show="selectedList.length >= 3 && dateEnd != undefined && dateStart != undefined" ng-class="hidden" ng-click="setDateRange()">RESULT</button></a>
+        <br><br>
+        <form>
+        <div ng-repeat="park in parkList | orderBy : 'name'">
+            <input class="check" type="checkbox" ng-click="selectLoc(park.id)">{{park.name}}<br>
+        </div>
+        </form>
 </div>
 
-<div class="right_down" ng-show="selectedList.length > 0" ng-class="hidden">
-    <h3>Selected Park List:</h3>
-    <form>
-        <div ng-repeat="selected in selectedList">
-            <input type="checkbox" ng-click="unSelectLoc(selected.id)">{{selected.name}}<br>
-        </div>
-    </form>
+
+<div class = "right">
+    <div class="right_column">
+        <form>
+        <select ng-model="dateStart" ng-change="">
+            <option value="" disabled selected>Start Date</option>
+            <option value=1 ng-hide="dateEnd <= 1">{{dateToday + dateIt | date:'fullDate'}}</option>
+            <option value=2 ng-hide="dateEnd <= 2">{{dateToday + 2 * dateIt | date:'fullDate'}}</option>
+            <option value=3 ng-hide="dateEnd <= 3">{{dateToday + 3 * dateIt | date:'fullDate'}}</option>
+            <option value=4 ng-hide="dateEnd <= 4">{{dateToday + 4 * dateIt | date:'fullDate'}}</option>
+            <option value=5 ng-hide="dateEnd <= 5">{{dateToday + 5 * dateIt | date:'fullDate'}}</option>
+            <option value=6 ng-hide="dateEnd <= 6">{{dateToday + 6 * dateIt | date:'fullDate'}}</option>
+            <option value=7 ng-hide="dateEnd <= 7">{{dateToday + 7 * dateIt | date:'fullDate'}}</option>
+        </select>
+        </form>
+        <p>to:</p>
+        <form>
+            <select ng-model="dateEnd" ng-change="">
+                <option value="" selected>End Date</option>
+                <option value=2 ng-hide="dateStart > 1 || !dateStart">{{dateToday + 2 * dateIt | date:'fullDate'}}</option>
+                <option value=3 ng-hide="dateStart > 2 || !dateStart">{{dateToday + 3 * dateIt | date:'fullDate'}}</option>
+                <option value=4 ng-hide="dateStart > 3 || !dateStart">{{dateToday + 4 * dateIt | date:'fullDate'}}</option>
+                <option value=5 ng-hide="dateStart > 4 || !dateStart">{{dateToday + 5 * dateIt | date:'fullDate'}}</option>
+                <option value=6 ng-hide="dateStart > 5 || !dateStart">{{dateToday + 6 * dateIt | date:'fullDate'}}</option>
+                <option value=7 ng-hide="dateStart > 6 || !dateStart">{{dateToday + 7 * dateIt | date:'fullDate'}}</option>
+            </select>
+        </form>
+    </div>
+
+    <div  class="right_column" ng-show="selectedList.length > 0" ng-class="hidden">
+        <h3>Selected Park List:</h3>
+        <form>
+            <div ng-repeat="selected in selectedList">
+                <input type="checkbox" ng-click="unSelectLoc(selected.id)">{{selected.name}}<br>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <p class="alert" ng-hide="dateEnd != undefined && dateStart != undefined">Please select a date range</p>
+        <p class="alert" ng-hide="selectedList.length >= 3">Please select at least three parks</p>
+    </div>
+
+    <div>
+    <a href="/result"><button ng-show="selectedList.length >= 3 && dateEnd != undefined && dateStart != undefined" ng-class="hidden" ng-click="setDateRange()">SEARCH PARKS</button></a>
+    </div>
 </div>

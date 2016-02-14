@@ -1,14 +1,21 @@
-<div>
-    <label for="username">Username:</label>
-    <input type="text" ng-model="data.username"/>
-</div>
-<div>
-    <label for="password">Password:</label>
-    <input type="text" ng-model="data.password"/>
-</div>
-<div>
-    <button ng-click="sendDataAndStuff()">Log In</button>
+
+<div class="left">
+    <p>Would you like to log in to load a saved Park List?</p>
+
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" ng-model="data.username"/>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="text" ng-model="data.password"/>
+    </div>
+    <div>
+        <button ng-click="sendDataAndStuff()">LOG IN</button>
+    </div>
 </div>
 
-<!--Temporary buttons for testing-->
-<a href="/selection"><button>SELECTION</button></a>
+<div class="right">
+    <p>Or you may continue to manually create a Park List:</p>
+    <a href="/selection"><button>SELECTION</button></a>
+</div>
