@@ -128,9 +128,9 @@ app.controller('SelectionController', ['$scope', '$http', 'DataService', functio
         console.log(eyeDee);
         for(var i=0; i < $scope.parkList.length; i++){
             if(eyeDee == $scope.parkList[i].id){
-                console.log($scope.parkList[i]);
+                //console.log($scope.parkList[i]);
                 $scope.selectedList.push($scope.parkList.splice(i, 1)[0]);
-                console.log($scope.parkList);
+                //console.log($scope.parkList);
             }
         }
     };
@@ -191,6 +191,7 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
                 dailyTemp: dailyTemp()
             };
             returnsArray.push(formattedReturn);
+            //####### Check for return count equal to request count ########
             if(returnsArray.length == $scope.selectedList.length){
                 sortArray();
             }
@@ -202,13 +203,15 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
         acquireData(i, $scope.selectedList[i].name);
     }
 
+    //######## Sort the final array by highest average temperature #########
     function sortArray() {
         returnsArray.sort(sortNumbers);
-        console.log(returnsArray);
+        //console.log(returnsArray);
         $scope.finalArray = returnsArray;
         buildDailyArray();
     }
 
+    //######### Sorting function ###########
     function sortNumbers(a, b) {
             if (a.averageTemp < b.averageTemp ) {
                 return 1;
@@ -265,7 +268,7 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
         return dateArray;
     }
 
-    //########### Push daily precipition percentages for selected range into an array #############
+    //########### Push daily precipitation percentages for selected range into an array #############
     function dailyPrecip() {
         var precipArray = [];
         var tempArray = currentReturn.slice($scope.startDate, $scope.endDate + 1);
@@ -285,6 +288,7 @@ app.controller('ResultController', ['$scope', '$http', 'DataService', function($
         return dailyArray;
     }
 
+    //############ Build array to display daily results by row with ng-repeat ###############
     function buildDailyArray() {
         for (var it = 0; it < 3; it++) {
             var onePark = [];
